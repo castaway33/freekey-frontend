@@ -101,7 +101,7 @@ const RoleApiAdd = ({setShowType}) => {
         }
         isMounted.current = true
         listRoleNoApis(rid).then(res => {
-            setApis(res)
+            setApis(res||[])
         })
     }, [])
 

@@ -110,7 +110,7 @@ const AddPage = ({setShowType}) => {
             return
         }
         isMounted.current = true
-        listRoleNoMenus(router.query.rid).then(res => setMenus(res))
+        listRoleNoMenus(router.query.rid).then(res => setMenus(res||[]))
     }, [])
 
     // 提交
