@@ -98,7 +98,7 @@ export const Footer = () => {
     return <div className={'footer'}>
         <div className="w">
             <div className={''}>
-                <Link className={'link-4 strong'}  href={process.env.HOME_PAGE}>首页</Link> <span className={'ml-6 mr-6'}>•</span>
+                <Link className={'link-4 strong'} href={process.env.HOME_PAGE}>首页</Link> <span className={'ml-6 mr-6'}>•</span>
                 <Link className={'link-4 strong'} href={'/backend/sys/test?name=CSS'}> CSS</Link>
             </div>
             <div className={'mt-10 fs-12'}>
@@ -253,7 +253,7 @@ export const Td = ({pageConf, data}) => {
             res.push(<td key={index}>{tdOptions(i.options, data[i.field])}</td>)
         } else if (field == 'icon' || i.type == 'img') { // 如果是图片
             let v = data[i.field];
-            let src = process.env.IMG_PREFIX + v
+            let src = process.env.IMG_PREFIX + "/" + v
             res.push(<td key={index}>{v ? <a href={src} target={'_blank'}><img className={'s-icon'} src={src} alt=''/></a> : ''}</td>)
         } else {
             res.push(<td key={index}>{data[i.field]}</td>)
