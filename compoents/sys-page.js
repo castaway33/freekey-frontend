@@ -13,17 +13,6 @@ import {searchDate, searchInput, searchSelect} from "./sys-base";
 import {ThemeToggle} from "./common";
 
 export const Headers = () => {
-    // 设置暗黑模式
-    const [dark, setDark] = useState(false)
-    useEffect(() => {
-        setDark(localStorage.getItem('dark') === 'true')
-    }, [])
-    const handleSet = () => {
-        setDark(!dark)
-        localStorage.setItem('dark', !dark)
-        document.getElementById('theme').href = !dark ? '/css/dark.css' : '/css/white.css'
-    }
-
     // 检查用户是否登录
     const router = useRouter()
     // 检查
@@ -253,7 +242,7 @@ export const Td = ({pageConf, data}) => {
             res.push(<td key={index}>{tdOptions(i.options, data[i.field])}</td>)
         } else if (field == 'icon' || i.type == 'img') { // 如果是图片
             let v = data[i.field];
-            let src = process.env.IMG_PREFIX + "/" + v
+            let src = process.env.IMG_PREFIX + '/' + v
             res.push(<td key={index}>{v ? <a href={src} target={'_blank'}><img className={'s-icon'} src={src} alt=''/></a> : ''}</td>)
         } else {
             res.push(<td key={index}>{data[i.field]}</td>)
