@@ -68,7 +68,7 @@ const MainPage = ({setShowType, setId, query, setQuery, setDefaultData}) => {
                 <>
                     {data && data.length == 0 ? <div className={'cell color-desc-02 fs-13'}>暂无数据</div>
                         : <>
-                            <div className={'cell flex-center p-3'}><PageButtons tempQuery={tempQuery} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
+                            <div className={'cell flex-center p-3'}><PageButtons query={query} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
                             <table className={'table-1'}>
                                 <thead>
                                 <tr>
@@ -93,7 +93,7 @@ const MainPage = ({setShowType, setId, query, setQuery, setDefaultData}) => {
                                 </tr>)}
                                 </tbody>
                             </table>
-                            <div className={'cell-tools p-3 flex-center'}><PageButtons tempQuery={tempQuery} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
+                            <div className={'cell-tools p-3 flex-center'}><PageButtons query={query} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
                         </>
                     }
                 </>

@@ -65,7 +65,7 @@ const MainPage = ({query, setQuery, setShowType, setId, pageConf}) => {
                 {data && data.list.length == 0
                     ? <div className={'cell color-desc-02 fs-13'}>暂无数据</div>
                     : <>
-                        <div className={'cell flex-center p-3'}><PageButtons tempQuery={tempQuery} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
+                        <div className={'cell flex-center p-3'}><PageButtons query={query} setTempQuery={setTempQuery} setQuery={setQuery} totalPage={data.total_page} total={data.total}/></div>
                         <table className={'table-1'}>
                             <tbody>
                             <tr>{pageConf.fields.map((i, index) => <th key={index}>{i.name}</th>)}
