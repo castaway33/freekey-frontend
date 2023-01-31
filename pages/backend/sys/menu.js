@@ -11,12 +11,12 @@ const pageConf = {
     fields: [
         {field: 'id', name: 'ID', renderFn: (d) => d.id},
         {field: 'pid', name: 'PID', required: 1, search: 1},
+        {field: 'sort', name: '排序'},
         {field: 'name', name: '名称', required: 1, search: 1, renderFn: (data) => data.type == 2 ? <span className={'color-blue strong'}>{data.name}</span> : <span> &nbsp;&nbsp;&nbsp;|-{data.name}</span>},
-        {field: 'icon', name: '图片'},
         {field: 'path', name: '地址', required: 1},
         {field: 'type', name: '类型', options: '1:菜单:tag-info,2:分组:tag-warning', required: 1, renderFn: (data) => data.type == 2 ? <span className={'tag-warning'}>分组</span> : <span className={'tag-info'}>页面</span>},
-        {field: 'desc', name: '说明'},
-        {field: 'sort', name: '排序'},
+        {field: 'icon', name: '图片'},
+        {field: 'desc', name: '说明', hide: 1},
     ]
 }
 
@@ -24,14 +24,15 @@ export default function Menu() {
     const [query, setQuery] = useState() // 查询参数
     const [showType, setShowType] = useState(1) // 1 主页 2添加 3修改
     const [id, setId] = useState() // 修改数据时使用
+    const [defaultData, setDefaultData] = useState({pid: -1, type: 2, path: '/backend'})
     return (<>
         <Headers/>
         <div className={'wrapper'}>
             <div className="w">
                 <div className={'wrapper-left'}>
                     <Nav/>
-                    {showType === 1 && <MainPage setShowType={setShowType} setId={setId} query={query} setQuery={setQuery}/>}
-                    {showType === 2 && <AddPage pageConf={pageConf} setShowType={setShowType} defaultData={{pid: 1, type: 2}}/>}
+                    {showType === 1 && <MainPage setShowType={setShowType} setId={setId} query={query} setQuery={setQuery} setDefaultData={setDefaultData}/>}
+                    {showType === 2 && <AddPage pageConf={pageConf} setShowType={setShowType} defaultData={defaultData}/>}
                     {showType === 3 && <UpdatePage pageConf={pageConf} setShowType={setShowType} id={id}/>}
                 </div>
             </div>
@@ -40,7 +41,7 @@ export default function Menu() {
     </>)
 }
 
-const MainPage = ({setShowType, setId, query, setQuery}) => {
+const MainPage = ({setShowType, setId, query, setQuery, setDefaultData}) => {
     const [tempQuery, setTempQuery] = useState({})
     let s = objToParams(query);
     const {data, isLoading, mutate, error} = useSWR(`/${pageConf.path}/list?${s != undefined ? s : ''}`, listData)
@@ -71,7 +72,7 @@ const MainPage = ({setShowType, setId, query, setQuery}) => {
                             <table className={'table-1'}>
                                 <thead>
                                 <tr>
-                                    {pageConf.fields.map((i, index) => <th key={index}>{i.name}</th>)}
+                                    {pageConf.fields.filter(i => !i.hide).map((i, index) => <th key={index}>{i.name}</th>)}
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -80,7 +81,14 @@ const MainPage = ({setShowType, setId, query, setQuery}) => {
                                     <td>
                                         <span className={'btn-warning strong mr-6'} onClick={() => setId(i.id) & setShowType(3)}>修改</span>
                                         <span className={'btn-danger strong mr-6'} onClick={() => handleDel(pageConf.path, i.id, mutate)}>删除</span>
-                                        {i.type === 2 && <span className={'btn-success strong'} onClick={() => handleSort(i.id)}>分组排序</span>}
+                                        {i.type === 2 && <>
+                                            <span className={'btn-success strong mr-3'} onClick={() => handleSort(i.id)}>排序</span>
+                                            <span className={'btn-info strong  '} onClick={() => {
+                                                setShowType(2)
+                                                setDefaultData({pid: i.id, type: 1, sort: i.sort, path: '/backend/'})
+                                            }
+                                            }>添加子菜单</span>
+                                        </>}
                                     </td>
                                 </tr>)}
                                 </tbody>

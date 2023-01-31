@@ -229,6 +229,8 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
         <span className={lastClass + " mr-3"} onClick={() => goTo({...tempQuery, page: lastNum})}>❯</span>
     </>
 }
+
+
 export const Td = ({pageConf, data}) => {
     let res = []
     pageConf.fields.forEach((i, index) => {
@@ -242,8 +244,8 @@ export const Td = ({pageConf, data}) => {
             res.push(<td key={index}>{tdOptions(i.options, data[i.field])}</td>)
         } else if (field == 'icon' || i.type == 'img') { // 如果是图片
             let v = data[i.field];
-            let src = process.env.IMG_PREFIX + '/' + v
-            res.push(<td key={index}>{v ? <a href={src} target={'_blank'}><img className={'s-icon'} src={src} alt=''/></a> : ''}</td>)
+            let src = process.env.IMG_PREFIX + "/" + v
+            res.push(<td key={index}>{v ? <a href={src} target={'_blank'}><img className={'s-icon-24'} src={src} alt=''/></a> : ''}</td>)
         } else {
             res.push(<td key={index}>{data[i.field]}</td>)
         }
@@ -386,7 +388,7 @@ export const UpdatePage = ({pageConf, id, setShowType}) => {
         <table className={'cell table-add'}>
             <tbody>
             {reqData && pageConf.fields.map((i, index) => {
-                if (i.editHide === 1 || i.hide) {
+                if (i.editHide === 1) {
                     return
                 }
                 let disabled = i.disabled === 1
