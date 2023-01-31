@@ -145,8 +145,8 @@ export const PageInfoWithInfo = ({backUrl, backName, pageName, desc, icon, child
         {children}
     </div>
 }
-export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total}) => {
-    const currentPage = tempQuery.page || 1
+export const PageButtons = ({query, setTempQuery, setQuery, totalPage, total}) => {
+    const currentPage = query && query.page || 1
     let start, end
     if (currentPage <= 6) {
         start = 2
@@ -172,7 +172,7 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
     pageButtons.push(<span key={''} className={currentPage === 1 ? 'GPageSpan strong' : 'GPageLink cursor-pointer'}
                            onClick={() => {
                                if (currentPage !== 1) {
-                                   goTo({...tempQuery, page: 1})
+                                   goTo({...query, page: 1})
                                }
                            }}>1</span>)
     for (let i = start; i < end; i++) {
@@ -181,7 +181,7 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
                 pageButtons.push(<span key={i + 'pre'}>...</span>)
             }
         }
-        pageButtons.push(<a key={i} className={currentPage === i ? 'GPageSpan strong' : 'GPageLink cursor-pointer'} onClick={() => goTo({...tempQuery, page: i})}>{i}</a>)
+        pageButtons.push(<a key={i} className={currentPage === i ? 'GPageSpan strong' : 'GPageLink cursor-pointer'} onClick={() => goTo({...query, page: i})}>{i}</a>)
     }
 
     if (currentPage < totalPage - 2 && totalPage > 10) {
@@ -191,7 +191,7 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
         pageButtons.push(<a key={'last'} className={currentPage === totalPage ? 'GPageSpan strong' : 'GPageLink cursor-pointer'}
                             onClick={() => {
                                 if (currentPage !== totalPage) {
-                                    let newVar = {...tempQuery, page: totalPage};
+                                    let newVar = {...query, page: totalPage};
                                     goTo(newVar)
                                 }
                             }}>{totalPage}</a>)
@@ -213,7 +213,7 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
         <span className={'mr-12'}></span>
         {pageButtons}
         <label className={'input mr-12'}>
-            <select name="size" onChange={(e) => goTo({...tempQuery, page: 1, size: e.target.value})}>
+            <select name="size" onChange={(e) => goTo({...query, page: 1, size: e.target.value})}>
                 <option value="15">页面大小</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -225,8 +225,8 @@ export const PageButtons = ({tempQuery, setTempQuery, setQuery, totalPage, total
             </select>
         </label>
         <span className={'mr-auto color-desc-02 fs-10'}>共<b> {total} </b>条 </span>
-        <span className={preClass + " mr-3"} onClick={() => goTo({...tempQuery, page: preNum})}>❮</span>
-        <span className={lastClass + " mr-3"} onClick={() => goTo({...tempQuery, page: lastNum})}>❯</span>
+        <span className={preClass + " mr-3"} onClick={() => goTo({...query, page: preNum})}>❮</span>
+        <span className={lastClass + " mr-3"} onClick={() => goTo({...query, page: lastNum})}>❯</span>
     </>
 }
 

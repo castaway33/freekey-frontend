@@ -72,7 +72,7 @@ const MainPage = ({query, setQuery, setShowType, setId}) => {
                                 </tr>)}
                                 </tbody>
                             </table>
-                            <div className={'cell-tools p-3 flex-center'}><PageButtons totalPage={data.total_page} total={data.total} setQuery={setQuery} tempQuery={tempQuery} setTempQuery={setTempQuery}/></div>
+                            <div className={'cell-tools p-3 flex-center'}><PageButtons totalPage={data.total_page} total={data.total} setQuery={setQuery} query={query} setTempQuery={setTempQuery}/></div>
                         </>
                     }
                 </>
